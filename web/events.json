@@ -1,0 +1,38 @@
+[
+  {
+    "sensor": {
+      "name": "上下晃動",
+      "value": null,
+      "id": "shake_up_down"
+    },
+    "action": {
+      "name": "音量加大",
+      "value": null,
+      "id": "vol_up"
+    }
+  },
+  {
+    "sensor": {
+      "name": "左右晃動",
+      "value": null,
+      "id": "shake_left_right"
+    },
+    "action": {
+      "name": "音量降低",
+      "value": null,
+      "id": "vol_down"
+    }
+  },
+  {
+    "sensor": {
+      "name": "翻面",
+      "value": null,
+      "id": "flip"
+    },
+    "action": {
+      "name": "播放/暫停音樂",
+      "value": null,
+      "id": "play_pause"
+    }
+  }
+]

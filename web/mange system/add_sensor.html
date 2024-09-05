@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <a href="add_scene.html">
+        <span class="material-symbols-outlined"> keyboard_backspace </span>
+      </a>
+    </div>
+    <button class="btn_group">
+      <div class="box action" onclick="addSensor(this)">
+        <span class="material-symbols-outlined" name="shake_up_down">
+          swap_vert
+        </span>
+        <p>上下晃動</p>
+      </div>
+    </button>
+    <button class="btn_group">
+      <div class="box action" onclick="addSensor(this)">
+        <span class="material-symbols-outlined" name="shake_left_right">
+          swap_horiz
+        </span>
+        <p>左右晃動</p>
+      </div>
+    </button>
+    <button class="btn_group">
+      <div class="box action" onclick="addSensor(this)">
+        <span class="material-symbols-outlined" name="flip"> cached </span>
+        <p>翻面</p>
+      </div>
+    </button>
+  </body>
+  <script>
+    function addSensor(elem) {
+      let id = elem.children[0].getAttribute("name");
+      let name = elem.children[1].innerText;
+      let temp = sessionStorage.temp ? JSON.parse(sessionStorage.temp) : {};
+      let sensor = { name: name, value: null, id: id };
+      temp.sensor = sensor;
+
+      sessionStorage.temp = JSON.stringify(temp);
+      location.href = "add_scene.html";
+    }
+  </script>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+  </head>
+  <body>
+    <h1>
+      &nbsp;
+      <button href="add_scene.html" onclick="location.href='add_scene.html'">
+        <span>+</span> 新增場景
+      </button>
+    </h1>
+    <div class="box_container"></div>
+  </body>
+  <script>
+    fetch("http://192.168.40.136:8181/manage/getAll", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // Read the response body once
+      })
+      .then((data) => {
+        localStorage.events = JSON.stringify(data);
+        data.forEach(function (scene, i) {
+          let idx = i + 1;
+          let html = `
+          <h3>場景<span class="scene_index">${idx}</span><button type="button" class="btn del"><span class="material-symbols-outlined">
+delete
+</span></button></h3>
+            <hr>
+            <ul>
+              <li>當${scene.sensor.name}</li>
+              <li>執行${scene.action.name}</li>
+            </ul>
+        `;
+
+          let box = document.createElement("div");
+          box.className = "box scene";
+          box.innerHTML = html;
+          document.querySelector(".box_container").appendChild(box);
+        });
+        document.querySelectorAll(".btn.del").forEach(function (delBtn) {
+          delBtn.onclick = delScene;
+        });
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    function delScene() {
+      let index = parseInt(this.previousElementSibling.textContent, 10);
+      let events = JSON.parse(localStorage.events);
+      events.splice(index - 1, 1);
+      localStorage.events = JSON.stringify(events);
+      fetch("http://192.168.40.136:8181/manage/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: localStorage.events }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Fetch update successful.");
+            location.reload();
+          } else {
+            console.error(
+              "Fetch request failed with status: " + response.status
+            );
+          }
+        })
+        .catch((err) => {
+          console.error("Error during fetch:", err);
+        });
+      location.reload();
+    }
+  </script>
+</html>

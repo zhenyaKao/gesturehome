@@ -1,0 +1,1 @@
+cmd_/root/adxl345/adxl345_kernel/adxl345.ko := ld -r -EL  -maarch64elf -z noexecstack --build-id=sha1  -T scripts/module.lds -o /root/adxl345/adxl345_kernel/adxl345.ko /root/adxl345/adxl345_kernel/adxl345.o /root/adxl345/adxl345_kernel/adxl345.mod.o;  true

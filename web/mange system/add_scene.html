@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <a href="index.html" onclick="sessionStorage.clear()">
+        <span class="material-symbols-outlined"> keyboard_backspace </span>
+      </a>
+    </div>
+    <h1>新增場景<button type="button" onclick="save(event)">儲存</button></h1>
+    <div class="box">
+      <h3>當...</h3>
+      <a href="add_sensor.html" id="addSensor"><span>+</span> 新增感應動作</a>
+    </div>
+    <div class="box add">
+      <h3>執行...</h3>
+      <a href="add_action.html" id="addAction"><span>+</span> 新增動作</a>
+    </div>
+  </body>
+  <script>
+    if (sessionStorage) {
+      if (sessionStorage["temp"]) {
+        let temp = JSON.parse(sessionStorage.temp);
+        if (temp["sensor"]) {
+          let value = temp.sensor.value ? temp.sensor.value : "";
+          let element = document.getElementById("addSensor");
+          element.innerHTML = `${temp.sensor.name.replace("__value__", value)}`;
+          element.className = "added";
+        }
+        if (temp["action"]) {
+          let value = temp.action.value ? temp.action.value : "";
+          let element = document.getElementById("addAction");
+          element.innerHTML = `${temp.action.name.replace("__value__", value)}`;
+          element.className = "added";
+        }
+      }
+    }
+
+    function save(e) {
+      if (document.getElementsByClassName("added").length < 2) {
+        alert("尚有項目未設定");
+        return;
+      }
+      try {
+        let event = JSON.parse(sessionStorage.temp);
+        let events = localStorage.events ? JSON.parse(localStorage.events) : [];
+        events.push(event);
+        localStorage.events = JSON.stringify(events);
+        fetch("http://192.168.40.136:8181/manage/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content: localStorage.events }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Fetch request successful.");
+              sessionStorage.clear();
+              location.href = "index.html";
+            } else {
+              console.error(
+                "Fetch request failed with status: " + response.status
+              );
+            }
+          })
+          .catch((err) => {
+            console.error("Error during fetch:", err);
+          });
+      } catch (err) {
+        console.error("An error occurred:", err);
+      }
+    }
+  </script>
+</html>
