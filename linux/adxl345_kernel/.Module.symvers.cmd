@@ -1,1 +1,0 @@
-cmd_/root/adxl345/adxl345_kernel/Module.symvers :=  sed 's/ko$$/o/'  /root/adxl345/adxl345_kernel/modules.order | scripts/mod/modpost -m -a    -o /root/adxl345/adxl345_kernel/Module.symvers -e -i Module.symvers -T - 
