@@ -9,5 +9,5 @@
 4. 透過WebSocket作為網頁前後端通訊的方式，以便隨時接收指令
 
 #### 手勢功能設定頁
-![](/manage_sys.jpg)
-![](/manage_sys2.jpg)
+![](/manage_sys.png)
+![](/manage_sys2.png)
