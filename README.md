@@ -7,7 +7,12 @@
 2. 於使用者層判斷手勢模式，並呼叫對應的網頁api
 3. 使用Node.js開發網頁後端程式，用以接收以及設定對應指令
 4. 透過WebSocket作為網頁前後端通訊的方式，以便隨時接收指令
+---
 
-#### 手勢功能設定頁
+### Linux Kernal & User Space
+![](/linux_code.png)
+
+
+### 手勢功能設定頁
 ![](/manage_sys.png)
 ![](/manage_sys2.png)
