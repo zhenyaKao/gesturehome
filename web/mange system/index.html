@@ -11,16 +11,19 @@
     />
   </head>
   <body>
+    <div class="header"></div>
+    <br />
     <h1>
       &nbsp;
       <button href="add_scene.html" onclick="location.href='add_scene.html'">
         <span>+</span> 新增場景
       </button>
     </h1>
+    <br />
     <div class="box_container"></div>
   </body>
   <script>
-    fetch("http://192.168.40.136:8181/manage/getAll", {
+    fetch("http://192.168.1.106:8181/manage/getAll", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
